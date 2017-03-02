@@ -106,9 +106,6 @@ int main(void) {
 
         draw(&snakeHead, &apple);
         move(1, 1);
-            printw(":%x", inputDirection);
-            move(2, 1);
-            printw(":%x", (uint8_t)~snakeDirection);       
         usleep(50000);
     }
     
