@@ -36,7 +36,9 @@ int main(void) {
     uint8_t snakeDirection = UP;
 
     uint8_t inputDirection = UP;
-    while(true) {
+
+    bool running = true;
+    while(running) {
         // collect input
         
         int c = getch();
@@ -92,7 +94,16 @@ int main(void) {
         snakeHead.position.x += dx;
         snakeHead.position.y += dy;
 
-        // look for collisions
+        // look for collision with tail
+        snakePart = &snakeHead;
+        while (snakePart->next != NULL) {
+            snakePart = snakePart->next;
+            if (snakeHead.position.x == snakePart->position.x && 
+                snakeHead.position.y == snakePart->position.y) {
+                running = false;
+            }
+        }
+        // look for collisions with apple
         if (snakeHead.position.x == apple.x && snakeHead.position.y == apple.y) {
             // grow the snake (it will be visible next iteration)
             Snake* newTail = malloc(sizeof(Snake));
@@ -108,6 +119,8 @@ int main(void) {
         move(1, 1);
         usleep(50000);
     }
+
+    endwin();
     
     return 0;
 }
