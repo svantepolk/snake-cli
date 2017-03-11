@@ -90,6 +90,7 @@ int main(void) {
 
             snakePart = snakePart->previous;
         }
+        
         // move the head
         snakeHead.position.x += dx;
         snakeHead.position.y += dy;
@@ -103,6 +104,13 @@ int main(void) {
                 running = false;
             }
         }
+
+        // look for collision with edges
+        if (snakeHead.position.x < 0 || snakeHead.position.y < 0 ||         
+            snakeHead.position.x >= colc || snakeHead.position.y >= rowc) {
+            running = false;
+        }
+        
         // look for collisions with apple
         if (snakeHead.position.x == apple.x && snakeHead.position.y == apple.y) {
             // grow the snake (it will be visible next iteration)
