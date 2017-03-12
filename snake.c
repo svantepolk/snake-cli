@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 
 #include <stdbool.h>
 
@@ -25,10 +26,12 @@ int main(void) {
     Point apple = {0};
     Snake snakeHead = {0};
     Snake* snakeTail = &snakeHead;
-    apple.x = 5;
-    apple.y = 10;
-        
+    
     getmaxyx(stdscr, rowc, colc);
+    
+    srand(time(NULL));    
+    apple.x = rand() % colc;
+    apple.y = rand() % rowc;
     
     snakeHead.position.x = colc / 2;
     snakeHead.position.y = rowc / 2;
@@ -121,6 +124,9 @@ int main(void) {
             newTail->position.y = snakePart->position.y;
             snakeTail->next = newTail;
             snakeTail = newTail;
+            // relocate the apple
+            apple.x = rand() % colc;
+            apple.y = rand() % rowc;
         }
 
         draw(&snakeHead, &apple);
